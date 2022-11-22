@@ -1,6 +1,6 @@
 {
   "name": "parasut-ts",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Parasut API Client for Node.js",
   "main": "lib/index.js",
   "types": "types/index.d.ts",
