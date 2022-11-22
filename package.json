@@ -11,7 +11,7 @@
     "webpack": "rimraf lib types && webpack --config webpack.config.js"
   },
   "author": "halledilirya",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "node-fetch": "^2.6.1"
   },
