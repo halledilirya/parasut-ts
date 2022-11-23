@@ -1,4 +1,4 @@
-import type { AccessTokenSuccessResponse, AccessTokenResponse } from "types";
+import type { AccessTokenSuccessResponse, AccessTokenResponse } from "../types";
 import fetch from "node-fetch";
 
 export const getAccessToken = async (
