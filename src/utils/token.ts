@@ -76,6 +76,11 @@ export const validateAccessToken = async (): Promise<{
     },
   });
 
+  if (!response.ok) {
+    const res = await getAccessToken(base_url);
+    return { accessToken: res.access_token };
+  }
+
   const data = (await response.json()) as AccessTokenResponse;
   if ("error" in data) throw new Error(data.error_description);
   global.token = {
