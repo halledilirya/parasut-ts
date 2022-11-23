@@ -1,3 +1,4 @@
+import { Range } from "../../types";
 import { getFilterParam } from "../../utils";
 import { send } from "../../utils/requests";
 
@@ -33,7 +34,7 @@ export type GetBankAccountsParams = {
   sort?: "id" | "balance" | "balance_in_trl";
   page?: {
     number?: number;
-    size?: number;
+    size?: Range<1, 25>;
   };
 };
 

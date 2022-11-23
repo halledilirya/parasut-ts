@@ -22,6 +22,9 @@ export const send = async ({
       ...(body && { body: JSON.stringify(body) }),
     })
       .then(async (res) => {
+        if (res.status === 401) {
+          return await send({ path, method, body });
+        }
         if (method === "DELETE") {
           res.status === 204 ? resolve({}) : resolve(await res.json());
         } else {
