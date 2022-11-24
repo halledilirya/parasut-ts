@@ -67,6 +67,24 @@ export default class SalesInvoices {
 
   /**
    * @param id string
+   * @param include string
+   * @returns Promise<{@link CancelSalesInvoicesResponse}>
+   */
+  async cancel(
+    id: string,
+    include?: string
+  ): Promise<CancelSalesInvoicesResponse> {
+    const response = await send({
+      path: `/sales_invoices/${id}/cancel?${
+        include ? `include=${include}` : ""
+      }`,
+      method: "DELETE",
+    });
+    return response as CancelSalesInvoicesResponse;
+  }
+
+  /**
+   * @param id string
    * @returns Promise<{@link RecoverSalesInvoicesResponse}>
    */
   async recover(id: string): Promise<RecoverSalesInvoicesResponse> {
@@ -449,6 +467,35 @@ export type UpdateSalesInvoicesParams = CreateSalesInvoicesParams;
 export type UpdateSalesInvoicesResponse = CreateSalesInvoicesResponse;
 
 export type DeleteSalesInvoicesResponse = {
+  errors?: {
+    title: string;
+    detail: string;
+  }[];
+};
+
+export type CancelSalesInvoicesResponse = {
+  data: {
+    id: string;
+    type: "sales_invoices";
+    attributes: GetSalesInvoicesAttributes;
+    relationships: GetSalesInvoicesRelationships;
+  };
+  included: {
+    id: string;
+    type:
+      | "item_categories"
+      | "contacts"
+      | "sales_invoice_details"
+      | "payments"
+      | "tags"
+      | "sales_offers"
+      | "sharings"
+      | "recurrence_plans"
+      | "e_archives"
+      | "e_invoices";
+    attributes: any;
+    relationships: any;
+  }[];
   errors?: {
     title: string;
     detail: string;

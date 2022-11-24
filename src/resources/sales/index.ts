@@ -14,6 +14,7 @@ import type {
   CreateSalesInvoicesRelationships,
   CreateSalesInvoicesResponse,
   DeleteSalesInvoicesResponse,
+  CancelSalesInvoicesResponse,
   GetSalesInvoicesParams,
   GetSalesInvoicesResponse,
   RecoverSalesInvoicesResponse,
@@ -462,6 +463,24 @@ export default class Sales {
 
   /**
    * @param id string
+   * @param include string (category, contact, details, details.product, details.warehouse, payments, payments.transaction, tags, sharings, recurrence_plan, active_e_document)
+   * @returns Promise<{@link CancelSalesInvoicesResponse}>
+   * @example
+   * const response = await client.sales.cancelSalesInvoices("1");
+   * console.log(response);
+   * @example
+   * const response = await client.sales.cancelSalesInvoices("1", "contact");
+   * console.log(response);
+   */
+  async cancelSalesInvoice(
+    id: string,
+    include?: string
+  ): Promise<CancelSalesInvoicesResponse> {
+    return this.sales_invoices.cancel(id, include);
+  }
+
+  /**
+   * @param id string
    * @returns Promise<{@link RecoverSalesInvoicesResponse}>
    * @example
    * const response = await client.recoverSalesInvoice("1");
@@ -523,6 +542,7 @@ export type {
   UpdateSalesInvoicesParams,
   UpdateSalesInvoicesResponse,
   DeleteSalesInvoicesResponse,
+  CancelSalesInvoicesResponse,
   RecoverSalesInvoicesResponse,
   ArchiveSalesInvoicesResponse,
   UnarchiveSalesInvoicesResponse,

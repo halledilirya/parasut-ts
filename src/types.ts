@@ -39,6 +39,7 @@ export type {
   UpdateSalesInvoicesParams,
   UpdateSalesInvoicesResponse,
   DeleteSalesInvoicesResponse,
+  CancelSalesInvoicesResponse,
   RecoverSalesInvoicesResponse,
   ArchiveSalesInvoicesResponse,
   UnarchiveSalesInvoicesResponse,
