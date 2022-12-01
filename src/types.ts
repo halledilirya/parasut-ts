@@ -36,6 +36,7 @@ export type {
   CreateSalesInvoicesAttributes,
   CreateSalesInvoicesRelationships,
   CreateSalesInvoicesResponse,
+  ShowSalesInvoicesResponse,
   UpdateSalesInvoicesParams,
   UpdateSalesInvoicesResponse,
   DeleteSalesInvoicesResponse,

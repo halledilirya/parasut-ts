@@ -13,6 +13,7 @@ import type {
   CreateSalesInvoicesAttributes,
   CreateSalesInvoicesRelationships,
   CreateSalesInvoicesResponse,
+  ShowSalesInvoicesResponse,
   DeleteSalesInvoicesResponse,
   CancelSalesInvoicesResponse,
   GetSalesInvoicesParams,
@@ -329,6 +330,27 @@ export default class Sales {
   }
 
   /**
+   * @param id string
+   * @param include string (category, contact, details, details.product, details.warehouse, payments, payments.transaction, tags, sharings, recurrence_plan, active_e_document)
+   * @returns Promise<{@link ShowSalesInvoicesResponse}>
+   * @example
+   * const response = await client.sales.showSalesInvoice("1");
+   * console.log(response);
+   * @example
+   * const response = await client.sales.showSalesInvoice("1", "category");
+   * console.log(response);
+   * @example
+   * const response = await client.sales.showSalesInvoice("1", "contact,details");
+   * console.log(response);
+   */
+  async showSalesInvoice(
+    id: string,
+    include?: string
+  ): Promise<ShowSalesInvoicesResponse> {
+    return this.sales_invoices.show(id, include);
+  }
+
+  /**
    * @param params.id string
    * @param params.attributes {@link CreateSalesInvoicesAttributes}
    * @param params.relationships {@link CreateSalesInvoicesRelationships}
@@ -539,6 +561,7 @@ export type {
   CreateSalesInvoicesAttributes,
   CreateSalesInvoicesRelationships,
   CreateSalesInvoicesResponse,
+  ShowSalesInvoicesResponse,
   UpdateSalesInvoicesParams,
   UpdateSalesInvoicesResponse,
   DeleteSalesInvoicesResponse,

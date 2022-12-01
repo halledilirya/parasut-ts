@@ -38,6 +38,19 @@ export default class SalesInvoices {
 
   /**
    * @param id string
+   * @param include string
+   * @returns Promise<{@link GetSalesInvoicesResponse}>
+   */
+  async show(id: string, include?: string): Promise<ShowSalesInvoicesResponse> {
+    const response = await send({
+      path: `/sales_invoices/${id}?${include ? `include=${include}` : ""}`,
+      method: "GET",
+    });
+    return response as ShowSalesInvoicesResponse;
+  }
+
+  /**
+   * @param id string
    * @param params {@link UpdateSalesInvoicesParams}
    * @returns Promise<{@link UpdateSalesInvoicesResponse}>
    */
@@ -459,6 +472,31 @@ export type CreateSalesInvoicesResponse = {
   errors?: {
     title: string;
     detail: string;
+  }[];
+};
+
+export type ShowSalesInvoicesResponse = {
+  data: {
+    id: string;
+    type: "sales_invoices";
+    attributes: GetSalesInvoicesAttributes;
+    relationships: GetSalesInvoicesRelationships;
+  };
+  included: {
+    id: string;
+    type:
+      | "item_categories"
+      | "contacts"
+      | "sales_invoice_details"
+      | "payments"
+      | "tags"
+      | "sales_offers"
+      | "sharings"
+      | "recurrence_plans"
+      | "e_archives"
+      | "e_invoices";
+    attributes: any;
+    relationships: any;
   }[];
 };
 
