@@ -219,4 +219,8 @@ export type CreateProductResponse = {
     attributes: any;
     relationships: any;
   }[];
+  errors: {
+    title: string;
+    detail: string;
+  }[];
 };

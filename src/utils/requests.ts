@@ -12,12 +12,38 @@ export const send = async ({
   body?: any;
   depth?: number;
 }) => {
-  if (depth > 3) throw new Error("Maximum depth reached");
+  if (depth > 3) {
+    return {
+      errors: [
+        {
+          title: "Max depth reached",
+          detail: "Max depth reached",
+        },
+      ],
+    };
+  }
+
   const { accessToken } = await validateAccessToken();
+  if (!accessToken) {
+    return {
+      errors: [
+        {
+          title: "Access token not found",
+          detail: "Access token not found",
+        },
+      ],
+    };
+  }
   const { base_url, firm_id } = global.user;
+
+  const controller = new AbortController();
+  const { signal } = controller;
+  setTimeout(() => controller.abort(), 5000);
+
   const response = await new Promise((resolve, reject) => {
     fetch(`${base_url}/v4/${firm_id}` + path, {
       method,
+      signal,
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
@@ -35,7 +61,25 @@ export const send = async ({
         }
       })
       .catch((err) => {
-        resolve(err);
+        const { type } = JSON.parse(JSON.stringify(err));
+        if (type && type === "aborted") {
+          resolve({
+            errors: [
+              {
+                title: "Request timed out",
+                detail: "Request timed out",
+              },
+            ],
+          });
+        }
+        resolve({
+          errors: [
+            {
+              title: "Request failed",
+              detail: "Request failed",
+            },
+          ],
+        });
       });
   });
   return response;
